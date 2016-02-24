@@ -1,9 +1,9 @@
 # JadeStern
 
 Yet another Twitter Client.  
-100% Wrote by Kotlin.  
+100% Written by Kotlin.  
 
-Supported the Android4.0-6.0
+Supported the Android 4.0-6.0
 
 ## License
 
