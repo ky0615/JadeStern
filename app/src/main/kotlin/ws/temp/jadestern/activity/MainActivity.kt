@@ -1,4 +1,4 @@
-package ws.temp.jadestern
+package ws.temp.jadestern.activity
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -11,9 +11,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import ws.temp.jadestern.R
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val TAG = ""
+    private val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
