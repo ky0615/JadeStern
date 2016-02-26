@@ -91,3 +91,4 @@ captures/
 gen-external-apklibs
 
 gradle.properties
+.gradletasknamecache
