@@ -5,6 +5,17 @@ Yet another Twitter Client.
 
 Supported the Android 4.0-6.0
 
+## Development
+
+### build
+
+```shellScript
+cp gradle.properties.sample gradle.properties
+cp signingConfigs.gradle.sample signingConfigs.gradle
+
+And, editing these file
+```
+
 ## License
 
 > Licensed under the Apache License, Version 2.0 (the "License");
