@@ -1,0 +1,15 @@
+signingConfigs {
+    debug {
+        storeFile file("debug.keystore")
+        storePassword "android"
+        keyAlias "debug"
+        keyPassword "android"
+    }
+
+    release {
+        storeFile file("signing.keystore")
+        storePassword ""
+        keyAlias ""
+        keyPassword ""
+    }
+}

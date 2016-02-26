@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'android-apt'
 
+apply from: '../signingConfigs.gradle', to: android
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -16,11 +18,12 @@ android {
     }
     buildTypes {
 
-        dev {
+        debug {
             minifyEnabled false
             debuggable true
             buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
             buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
+            signingConfig signingConfigs.debug
         }
 
         release {
@@ -29,6 +32,7 @@ android {
             buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
             buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
