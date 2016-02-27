@@ -21,16 +21,16 @@ android {
         debug {
             minifyEnabled false
             debuggable true
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
+            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
+            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
             signingConfig signingConfigs.debug
         }
 
         release {
             minifyEnabled true
             debuggable false
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
+            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
+            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -51,6 +51,11 @@ android {
 
     lintOptions {
         abortOnError false
+        disable 'InvalidPackage'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     compileOptions {
