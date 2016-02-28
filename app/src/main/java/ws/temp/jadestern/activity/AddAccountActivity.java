@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,14 +15,15 @@ import butterknife.OnClick;
 import twitter4j.auth.AccessToken;
 import ws.temp.jadestern.BuildConfig;
 import ws.temp.jadestern.R;
-import ws.temp.jadestern.model.Account;
+import ws.temp.jadestern.model.AccountModel;
 
 public class AddAccountActivity extends AppCompatActivity {
     private static final String TAG = AddAccountActivity.class.getSimpleName();
 
-    Account account;
+    AccountModel accountModel;
 
     private OpenType type;
+    private static final String OPEN_TYPE = "OpenType";
 
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
@@ -39,14 +41,14 @@ public class AddAccountActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        type = (OpenType) intent.getSerializableExtra("OpenType");
+        type = (OpenType) intent.getSerializableExtra(OPEN_TYPE);
 
-        account = new Account(BuildConfig.TWITTER_CONSUMER_KEY, BuildConfig.TWITTER_CONSUMER_SECRET);
+        accountModel = new AccountModel(BuildConfig.TWITTER_CONSUMER_KEY, BuildConfig.TWITTER_CONSUMER_SECRET);
 
         switch (type) {
             case ADD_TWITTER:
                 input_pin_base.setVisibility(View.GONE);
-                account.getAuthorizationURL(this);
+                accountModel.getAuthorizationURL(this);
                 break;
             case RETURN_TWITTER:
                 input_pin_base.setVisibility(View.VISIBLE);
@@ -57,18 +59,21 @@ public class AddAccountActivity extends AppCompatActivity {
     @OnClick(R.id.submit_pin)
     public void onClickPinButton() {
         String pin = input_pin.getText().toString();
-        account.setOnSuccessAuthNewAccountListener(new Account.OnSuccessAuthNewAccountListener() {
+        accountModel.setOnSuccessAuthNewAccountListener(new AccountModel.OnSuccessAuthNewAccountListener() {
             @Override
             public void onSuccessAuthNewAccount(String consumerKey, String consumerSecret, AccessToken accessToken) {
                 if (accessToken == null) {
                     Snackbar.make(coordinatorLayout, "fail the auth", Snackbar.LENGTH_LONG).show();
+                    // TODO: 16/02/28 open dialog: question to reacquire the token.
                     return;
                 }
 
                 Snackbar.make(coordinatorLayout, "account auth was successful!: " + accessToken.getScreenName(), Snackbar.LENGTH_LONG).show();
+                accountModel.addAccount(accessToken);
+                returnToMainActivity();
             }
         });
-        account.getAccessToken(pin);
+        accountModel.getAccessToken(pin);
     }
 
     @Override
@@ -86,13 +91,18 @@ public class AddAccountActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putSerializable("OpenType", type);
+        savedInstanceState.putSerializable(OPEN_TYPE, type);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        type = (OpenType) savedInstanceState.getSerializable("OpenType");
+        type = (OpenType) savedInstanceState.getSerializable(OPEN_TYPE);
+    }
+
+    public void returnToMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     public enum OpenType {
