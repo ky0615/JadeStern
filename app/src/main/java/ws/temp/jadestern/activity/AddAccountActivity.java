@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -19,20 +18,15 @@ import ws.temp.jadestern.model.AccountModel;
 
 public class AddAccountActivity extends AppCompatActivity {
     private static final String TAG = AddAccountActivity.class.getSimpleName();
-
-    AccountModel accountModel;
-
-    private OpenType type;
     private static final String OPEN_TYPE = "OpenType";
-
+    AccountModel accountModel;
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
-
     @Bind(R.id.input_pin_base)
     View input_pin_base;
-
     @Bind(R.id.input_pin)
     EditText input_pin;
+    private OpenType type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

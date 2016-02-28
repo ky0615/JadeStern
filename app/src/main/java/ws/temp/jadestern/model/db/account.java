@@ -3,7 +3,6 @@ package ws.temp.jadestern.model.db;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
-import twitter4j.auth.AccessToken;
 
 public class Account extends RealmObject {
 

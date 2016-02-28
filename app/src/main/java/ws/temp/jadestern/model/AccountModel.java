@@ -23,15 +23,12 @@ public class AccountModel extends Model {
     public Twitter twitter;
     public RequestToken requestToken;
     public AccessToken accessToken;
-
-    @Getter
-    private String consumerKey;
-
-    @Getter
-    private String consumerSecret;
-
     @Setter
     public OnSuccessAuthNewAccountListener onSuccessAuthNewAccountListener;
+    @Getter
+    private String consumerKey;
+    @Getter
+    private String consumerSecret;
 
     public AccountModel() {
         this(BuildConfig.TWITTER_CONSUMER_KEY, BuildConfig.TWITTER_CONSUMER_SECRET);

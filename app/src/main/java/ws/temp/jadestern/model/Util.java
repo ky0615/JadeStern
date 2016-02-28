@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
+
 import ws.temp.jadestern.R;
 
 public class Util {
