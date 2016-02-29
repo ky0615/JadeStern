@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 apply from: '../signingConfigs.gradle', to: android
 
@@ -59,8 +60,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -79,13 +80,13 @@ dependencies {
     compile 'io.realm:realm-android:0.87.5'
     apt 'org.projectlombok:lombok:1.16.6'
     provided 'org.projectlombok:lombok:1.16.6'
-
+    compile 'io.reactivex:rxandroid:1.1.0'
 }
 
 buildscript {
     ext {
         kotlin_version = '1.0.0'
-        support_library = '23.1.1'
+        support_library = '23.2.0'
     }
 
     repositories {

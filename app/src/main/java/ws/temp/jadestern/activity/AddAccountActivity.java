@@ -11,7 +11,6 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import twitter4j.auth.AccessToken;
 import ws.temp.jadestern.BuildConfig;
 import ws.temp.jadestern.R;
 import ws.temp.jadestern.model.AccountModel;
@@ -53,19 +52,16 @@ public class AddAccountActivity extends AppCompatActivity {
     @OnClick(R.id.submit_pin)
     public void onClickPinButton() {
         String pin = input_pin.getText().toString();
-        accountModel.setOnSuccessAuthNewAccountListener(new AccountModel.OnSuccessAuthNewAccountListener() {
-            @Override
-            public void onSuccessAuthNewAccount(String consumerKey, String consumerSecret, AccessToken accessToken) {
-                if (accessToken == null) {
-                    Snackbar.make(coordinatorLayout, "fail the auth", Snackbar.LENGTH_LONG).show();
-                    // TODO: 16/02/28 open dialog: question to reacquire the token.
-                    return;
-                }
-
-                Snackbar.make(coordinatorLayout, "account auth was successful!: " + accessToken.getScreenName(), Snackbar.LENGTH_LONG).show();
-                accountModel.addAccount(accessToken);
-                returnToMainActivity();
+        accountModel.setOnSuccessAuthNewAccountListener((consumerKey, consumerSecret, accessToken) -> {
+            if (accessToken == null) {
+                Snackbar.make(coordinatorLayout, "fail the auth", Snackbar.LENGTH_LONG).show();
+                // TODO: 16/02/28 open dialog: question to reacquire the token.
+                return;
             }
+
+            Snackbar.make(coordinatorLayout, "account auth was successful!: " + accessToken.getScreenName(), Snackbar.LENGTH_LONG).show();
+            accountModel.addAccount(accessToken);
+            returnToMainActivity();
         });
         accountModel.getAccessToken(pin);
     }
