@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 apply from: '../signingConfigs.gradle', to: android
 
@@ -21,16 +22,16 @@ android {
         debug {
             minifyEnabled false
             debuggable true
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
+            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
+            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
             signingConfig signingConfigs.debug
         }
 
         release {
             minifyEnabled true
             debuggable false
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "\"${project.property("twitter.consumerkey")}\""
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "\"${project.property("twitter.consumersecret")}\""
+            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
+            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -51,11 +52,16 @@ android {
 
     lintOptions {
         abortOnError false
+        disable 'InvalidPackage'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -74,13 +80,13 @@ dependencies {
     compile 'io.realm:realm-android:0.87.5'
     apt 'org.projectlombok:lombok:1.16.6'
     provided 'org.projectlombok:lombok:1.16.6'
-
+    compile 'io.reactivex:rxandroid:1.1.0'
 }
 
 buildscript {
     ext {
         kotlin_version = '1.0.0'
-        support_library = '23.1.1'
+        support_library = '23.2.0'
     }
 
     repositories {

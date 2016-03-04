@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
+
 import ws.temp.jadestern.R;
 
 public class Util {
@@ -79,15 +80,12 @@ public class Util {
     }
 
     public static void setTimeout(final long ms, final Runnable runnable) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(ms);
-                    handler.post(runnable);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(ms);
+                handler.post(runnable);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
     }
