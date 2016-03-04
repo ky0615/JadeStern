@@ -97,3 +97,4 @@ signingConfigs.gradle
 .gradletasknamecache
 signing.keystore
 debug.keystore
+.idea/
