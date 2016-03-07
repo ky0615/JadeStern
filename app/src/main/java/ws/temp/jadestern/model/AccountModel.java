@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import lombok.Getter;
 import lombok.Setter;
 import twitter4j.Twitter;
@@ -21,12 +20,17 @@ public class AccountModel extends Model {
     private static final String TAG = AccountModel.class.getSimpleName();
 
     public Twitter twitter;
+
     public RequestToken requestToken;
+
     public AccessToken accessToken;
+
     @Setter
     public OnSuccessAuthNewAccountListener onSuccessAuthNewAccountListener;
+
     @Getter
     private String consumerKey;
+
     @Getter
     private String consumerSecret;
 
@@ -77,7 +81,6 @@ public class AccountModel extends Model {
 
     public void getAccessToken(final String token) {
         new AsyncTask<Void, Void, AccessToken>() {
-
             @Override
             protected AccessToken doInBackground(Void... params) {
                 try {
@@ -103,8 +106,8 @@ public class AccountModel extends Model {
             throw new IllegalArgumentException("User id is not defined.");
 
         Account account = realm.where(Account.class)
-                .equalTo("userId", userId)
-                .findFirst();
+            .equalTo("userId", userId)
+            .findFirst();
         return account != null;
     }
 
@@ -132,7 +135,7 @@ public class AccountModel extends Model {
 
     public int getAccountLength() {
         return realm.where(Account.class)
-                .findAll().size();
+            .findAll().size();
     }
 
     public interface OnSuccessAuthNewAccountListener {

@@ -4,27 +4,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ws.temp.jadestern.BuildConfig;
 import ws.temp.jadestern.R;
 import ws.temp.jadestern.model.AccountModel;
+import ws.temp.jadestern.model.AnalLogger;
 
-public class AddAccountActivity extends AppCompatActivity {
+public class AddAccountActivity extends BaseActivity {
     private static final String TAG = AddAccountActivity.class.getSimpleName();
+
     private static final String OPEN_TYPE = "OpenType";
+
     AccountModel accountModel;
+
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
+
     @Bind(R.id.input_pin_base)
     View input_pin_base;
+
     @Bind(R.id.input_pin)
     EditText input_pin;
+
     private OpenType type;
 
     @Override
@@ -58,12 +64,18 @@ public class AddAccountActivity extends AppCompatActivity {
                 // TODO: 16/02/28 open dialog: question to reacquire the token.
                 return;
             }
-
-            Snackbar.make(coordinatorLayout, "account auth was successful!: " + accessToken.getScreenName(), Snackbar.LENGTH_LONG).show();
+            Toast.makeText(this, "account auth was successful!: " + accessToken.getScreenName(), Toast.LENGTH_LONG).show();
             accountModel.addAccount(accessToken);
+            AnalLogger.Account.addAccount(accessToken.getUserId());
             returnToMainActivity();
         });
         accountModel.getAccessToken(pin);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AnalLogger.trackScreenView(R.string.activity_add_account);
     }
 
     @Override

@@ -11,7 +11,6 @@ import ws.temp.jadestern.R;
 public class TimelineFragment extends Fragment {
     private static final String TAG = TimelineFragment.class.getSimpleName();
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -1,11 +1,9 @@
 package ws.temp.jadestern.model;
 
 import android.content.Context;
-
 import io.realm.Realm;
 
 public class Model {
-
     protected static Context context;
 
     protected static Realm realm;

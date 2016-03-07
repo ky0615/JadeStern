@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
-
 import ws.temp.jadestern.R;
 
 public class Util {
@@ -62,10 +61,10 @@ public class Util {
         }
 
         return new StringBuilder()
-                .append(diffTime / divide)
-                .append(unit)
-                .append(direction)
-                .toString();
+            .append(diffTime / divide)
+            .append(unit)
+            .append(direction)
+            .toString();
     }
 
     public static String addText(String base, String text) {
@@ -93,12 +92,12 @@ public class Util {
     public static void startChromeInApp(String url, Activity context) {
 
         final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                .setShowTitle(true)
-                .setToolbarColor(ContextCompat.getColor(context, R.color.primary_dark))
-                .setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left)
-                .setExitAnimations(context, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.searchbar_back))
-                .build();
+            .setShowTitle(true)
+            .setToolbarColor(ContextCompat.getColor(context, R.color.primary_dark))
+            .setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left)
+            .setExitAnimations(context, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.searchbar_back))
+            .build();
 
         customTabsIntent.launchUrl(context, Uri.parse(url));
     }
