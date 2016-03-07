@@ -20,3 +20,6 @@ org.gradle.daemon=true
 
 twitter.consumerkey=""
 twitter.consumersecret=""
+
+# You have not to be enclosed in double quotation marks.
+fabric.api_key=YOUR_KEY

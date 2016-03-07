@@ -98,3 +98,4 @@ signingConfigs.gradle
 signing.keystore
 debug.keystore
 .idea/
+fabric.properties

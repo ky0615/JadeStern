@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'io.fabric'
 
 apply from: '../signingConfigs.gradle', to: android
 
@@ -16,23 +17,26 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
+        buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
+
+        manifestPlaceholders = [
+                fabric_api_key: project.property("fabric.api_key")
+        ]
+
     }
     buildTypes {
 
         debug {
             minifyEnabled false
             debuggable true
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
             signingConfig signingConfigs.debug
         }
 
         release {
             minifyEnabled true
             debuggable false
-            buildConfigField "String", "TWITTER_CONSUMER_KEY", "${project.property("twitter.consumerkey")}"
-            buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${project.property("twitter.consumersecret")}"
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
@@ -63,12 +67,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    productFlavors {
+        local {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        optimize {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.android.support:support-v4:$support_library"
     compile "com.android.support:appcompat-v7:$support_library"
     compile "com.android.support:design:$support_library"
     compile "com.android.support:cardview-v7:$support_library"
@@ -81,20 +96,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.realm:realm-android:0.87.5'
     compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.android.support:support-v4:23.2.0'
-}
 
-buildscript {
-    ext {
-        kotlin_version = '1.0.0'
-        support_library = '23.2.0'
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
     }
 }
