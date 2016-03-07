@@ -2,7 +2,7 @@ package ws.temp.jadestern.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
     public ViewPager pager;
 
     @Bind(R.id.pagerTitle)
-    public PagerTitleStrip pagerTitleStrip;
+    public PagerTabStrip pagerTabStrip;
 
     public TimelinePagerAdapter pagerAdapter;
 
@@ -47,6 +47,8 @@ public class MainActivity extends BaseActivity {
 
         pagerAdapter = new TimelinePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+
+        pagerTabStrip.setTabIndicatorColorResource(R.color.primary);
 
         // TODO: 16/03/07 loading config and deployment the tab
         pagerAdapter.addAll(

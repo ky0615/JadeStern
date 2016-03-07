@@ -49,4 +49,9 @@ public class TimelinePagerAdapter extends FragmentPagerAdapter {
     public void addAll(TimelineBaseFragment... fs) {
         addAll(Arrays.asList(fs));
     }
+
+    @Override
+    public float getPageWidth(int position) {
+        return 0.5f;
+    }
 }
