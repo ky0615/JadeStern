@@ -3,7 +3,6 @@ package ws.temp.jadestern;
 import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import io.fabric.sdk.android.Fabric;
 import ws.temp.jadestern.model.AnalLogger;
@@ -16,7 +15,12 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+
+        // Moving only When release build
+        if (!BuildConfig.DEBUG)
+            Fabric.with(this, new Crashlytics());
+
+        // init
         new Util(this);
         new Model(this);
         new AnalLogger(this, getDefaultTracker());
@@ -30,10 +34,6 @@ public class MainApplication extends Application {
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-
-            if (BuildConfig.DEBUG) {
-                analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-            }
 
             // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(R.xml.global_tracker);

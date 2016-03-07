@@ -2,14 +2,17 @@ package ws.temp.jadestern.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import ws.temp.jadestern.R;
-import ws.temp.jadestern.fragment.TimelineFragment;
+import ws.temp.jadestern.fragment.TimelineBaseFragment;
 import ws.temp.jadestern.model.AnalLogger;
+import ws.temp.jadestern.model.adapter.TimelinePagerAdapter;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -19,6 +22,14 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     public Toolbar toolbar;
+
+    @Bind(R.id.main_pager)
+    public ViewPager pager;
+
+    @Bind(R.id.pagerTitle)
+    public PagerTitleStrip pagerTitleStrip;
+
+    public TimelinePagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,10 +45,16 @@ public class MainActivity extends BaseActivity {
             drawerLayout.openDrawer(Gravity.LEFT);
         });
 
-        getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.content_main, new TimelineFragment())
-            .commit();
+        pagerAdapter = new TimelinePagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
+
+        // TODO: 16/03/07 loading config and deployment the tab
+        pagerAdapter.addAll(
+            new TimelineBaseFragment(),
+            new TimelineBaseFragment(),
+            new TimelineBaseFragment(),
+            new TimelineBaseFragment()
+        );
     }
 
     @Override

@@ -79,14 +79,7 @@ public class Util {
     }
 
     public static void setTimeout(final long ms, final Runnable runnable) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(ms);
-                handler.post(runnable);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        new Handler().postDelayed(runnable, ms);
     }
 
     public static void startChromeInApp(String url, Activity context) {
